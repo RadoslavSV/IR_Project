@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <file>
+        <name>input.txt</name>
+    </file>
+    <components>
+        <positional_index export="true"/>
+    </components>
+</config>

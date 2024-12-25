@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1694105712 source:c:\users\owner\desktop\ir_project\pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<limits.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<sys/stat.h>
+	<stdint.h>
+
+1694105712 c:\users\owner\desktop\ir_project\pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1694105712 c:\users\owner\desktop\ir_project\pugiconfig.hpp
+
+1735143044 source:c:\users\owner\desktop\ir_project\main.cpp
+	<iostream>
+	"pugixml.hpp"
+	<unordered_map>
+	<string>
+	<vector>
+	<fstream>
+	<windows.h>
+	<sstream>
+	<locale>
+	<codecvt>
+	<set>
+	<cctype>
+	<algorithm>
+
