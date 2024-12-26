@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <file>
-        <name>input.txt</name>
-    </file>
+    <resource_directory>
+        <name>resources</name>
+    </resource_directory>
     <components>
         <positional_index export="true"/>
     </components>

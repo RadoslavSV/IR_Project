@@ -13,6 +13,8 @@
 #include <cctype>
 #include <algorithm>
 
+std::string resourse_dir_path = "resources";
+
 std::unordered_map<std::string,
                    std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
 
@@ -21,6 +23,17 @@ enum eComponents{
     AUTO_COUNT
 };
 std::unordered_map<eComponents, bool> components_to_export;
+
+
+bool directory_exists(const std::string& dir_name) {
+    struct stat info;
+
+    if (stat(dir_name.c_str(), &info) == 0 && (info.st_mode & S_IFDIR)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 void load_config_file()
 {
@@ -32,12 +45,13 @@ void load_config_file()
         std::cout << "config.xml successfully parsed!" << std::endl;
 
         pugi::xml_node root = config_file.child("config");
-        for (pugi::xml_node file_node : root.children("file")) {
+        for (pugi::xml_node file_node : root.children("resource_directory")) {
             pugi::xml_node name_node = file_node.child("name");
             if (name_node) {
-                std::cout << "filename=" << name_node.text().as_string() << std::endl;
+                resourse_dir_path = name_node.text().as_string();
+                std::cout << "resourse_dir_path = " << resourse_dir_path << std::endl;
             } else {
-                std::cout << "No <name> node found in <config><file>." << std::endl;
+                std::cerr << "No <name> node found in <config><resource_directory>." << std::endl;
             }
         }
 
@@ -48,14 +62,14 @@ void load_config_file()
                 auto b_positional_index_export = positional_index_node.attribute("export").as_bool();
                 components_to_export[POSITIONAL_INDEX] = b_positional_index_export;
             } else {
-                std::cout << "<positional_index> node not found." << std::endl;
+                std::cerr << "<positional_index> node not found." << std::endl;
             }
         } else {
-            std::cout << "<components> node not found." << std::endl;
+            std::cerr << "<components> node not found." << std::endl;
         }
 
     } else {
-        std::cout << "Unable to load config.xml: " << result.description() << std::endl;
+        std::cerr << "Unable to load config.xml: " << result.description() << std::endl;
     }
     std::cout << std::endl;
 }
@@ -144,7 +158,7 @@ void traverse_directory(const std::string& directory_path)
     HANDLE hFind = FindFirstFile((directory_path + "\\*").c_str(), &findFileData);
 
     if (hFind == INVALID_HANDLE_VALUE) {
-        std::cout << "Invalid directory path: " << directory_path << std::endl;
+        std::cerr << "Invalid directory path: " << directory_path << std::endl;
         return;
     }
 
@@ -214,9 +228,12 @@ void write_positional_index_to_xml()
 int main()
 {
     load_config_file();
+    if (!directory_exists(resourse_dir_path)) {
+        std::cerr << "Directory \'" << resourse_dir_path << "\' does not exist: " << std::endl;
+        return 1;
+    }
 
-    const std::string& root_directory = "resources\\BG_texts\\texts";
-    traverse_directory(root_directory);
+    traverse_directory(resourse_dir_path);
     std::cout << std::endl;
 
     if(components_to_export.at(POSITIONAL_INDEX)) write_positional_index_to_xml();

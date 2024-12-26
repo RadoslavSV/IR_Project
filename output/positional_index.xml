@@ -28,6 +28,11 @@
 			<positions>{9}</positions>
 		</document>
 	</term>
+	<term value="иванов" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{14, 15}</positions>
+		</document>
+	</term>
 	<term value="защото" doc_frequency="1">
 		<document path="resources\BG_texts\texts\Defence\text_test.txt">
 			<positions>{6}</positions>
@@ -49,6 +54,11 @@
 		</document>
 		<document path="resources\BG_texts\texts\Defence\text_test.txt">
 			<positions>{5, 7}</positions>
+		</document>
+	</term>
+	<term value="иван" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{13}</positions>
 		</document>
 	</term>
 	<term value="спря" doc_frequency="1">
