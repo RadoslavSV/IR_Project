@@ -78,6 +78,12 @@ bool isCyrillicLetter(char32_t ch) {
     return (ch >= 0x0410 && ch <= 0x044F) || ch == 0x0401 || ch == 0x0451;
 }
 
+bool isCyrillicWord(const std::string& word) {
+    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> converter;
+    std::u32string utf32input = converter.from_bytes(word);
+    return std::all_of(utf32input.begin(), utf32input.end(), isCyrillicLetter);
+}
+
 void cleanCyrillicWord(std::string& input) {
     std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> converter;
     std::u32string utf32input = converter.from_bytes(input);
@@ -118,7 +124,9 @@ void add_to_index(const std::string& filepath)
     int position = 0;
     while (file >> word) {
         cleanCyrillicWord(word);
-        cyrillicWordToLowercase(word);
+        if(isCyrillicWord(word)) {
+            cyrillicWordToLowercase(word);
+        }
         auto& [doc_frequency, postings_map] = positional_index[word];
 
         if (postings_map.find(filepath) == postings_map.end()) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <resource_directory>
-        <name>resources</name>
+        <name>resources\BG_texts</name>
     </resource_directory>
     <components>
         <positional_index export="true"/>
