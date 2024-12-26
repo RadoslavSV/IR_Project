@@ -139,13 +139,9 @@ void read_file(const std::string& filepath)
     #endif
 
     std::ifstream file(filepath);
-    std::string line;
 
     if (file.is_open()) {
-        while (getline(file, line)) {
-            //std::cout << line << std::endl;
-            add_to_index(filepath);
-        }
+        add_to_index(filepath);
         file.close();
     } else {
         std::cout << "Could not open file: " << filepath << std::endl;
