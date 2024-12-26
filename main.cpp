@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sys/stat.h>
 #include "pugixml.hpp"
 #include <unordered_map>
 #include <string>
@@ -198,10 +199,15 @@ void write_positional_index_to_xml()
         }
     }
 
-    if (doc.save_file("positional_index.xml")) {
-        std::cout << "Positional index successfully written to 'positional_index.xml'.\n";
+    if (mkdir("output") && errno != EEXIST) {
+        std::cerr << "Error creating output directory\n";
+    }
+
+    const std::string file_path = "output\\positional_index.xml";
+    if (doc.save_file(file_path.c_str())) {
+        std::cout << "Positional index successfully written to " << file_path << std::endl;
     } else {
-        std::cerr << "Failed to write positional index to 'positional_index.xml'.\n";
+        std::cerr << "Failed to write positional index to " << file_path << std::endl;
     }
 }
 
