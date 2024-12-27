@@ -137,6 +137,9 @@ void add_to_index(const std::string& filepath)
         if(isCyrillicWord(word)) {
             cyrillicWordToLowercase(word);
         }
+
+        if(word.size() == 0) continue;
+
         auto& [doc_frequency, postings_map] = positional_index[word];
 
         if (postings_map.find(filepath) == postings_map.end()) {
@@ -253,6 +256,7 @@ void write_positional_index_to_xml()
             allPos.pop_back();
             pugi::xml_node pos_node = doc_node.append_child("positions");
             pos_node.text() = allPos.c_str();
+            pos_node.append_attribute("term_frequency") = std::to_string(positions.size()).c_str();
         }
     }
 
