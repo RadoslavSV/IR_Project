@@ -76,6 +76,11 @@
 			<positions term_frequency="2">{5, 7}</positions>
 		</document>
 	</term>
+	<term value="човек" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
+			<positions term_frequency="1">{7}</positions>
+		</document>
+	</term>
 	<term value="човекът" doc_frequency="2">
 		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
 			<positions term_frequency="1">{1}</positions>

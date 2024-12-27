@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<BTrie>
+	<node value="б" end_of_word="false">
+		<node value="е" end_of_word="false">
+			<node value="ш" end_of_word="false">
+				<node value="е" end_of_word="true" />
+			</node>
+		</node>
+	</node>
+	<node value="д" end_of_word="false">
+		<node value="а" end_of_word="true" />
+		<node value="о" end_of_word="false">
+			<node value="б" end_of_word="false">
+				<node value="р" end_of_word="false">
+					<node value="е" end_of_word="true" />
+				</node>
+			</node>
+		</node>
+	</node>
+	<node value="з" end_of_word="false">
+		<node value="а" end_of_word="false">
+			<node value="т" end_of_word="false">
+				<node value="о" end_of_word="false">
+					<node value="в" end_of_word="false">
+						<node value="а" end_of_word="true" />
+					</node>
+				</node>
+			</node>
+			<node value="щ" end_of_word="false">
+				<node value="о" end_of_word="false">
+					<node value="т" end_of_word="false">
+						<node value="о" end_of_word="true" />
+					</node>
+				</node>
+			</node>
+		</node>
+	</node>
+	<node value="и" end_of_word="true">
+		<node value="в" end_of_word="false">
+			<node value="а" end_of_word="false">
+				<node value="н" end_of_word="true">
+					<node value="о" end_of_word="false">
+						<node value="в" end_of_word="true" />
+					</node>
+				</node>
+			</node>
+		</node>
+		<node value="л" end_of_word="false">
+			<node value="и" end_of_word="true" />
+		</node>
+	</node>
+	<node value="н" end_of_word="false">
+		<node value="е" end_of_word="true" />
+	</node>
+	<node value="п" end_of_word="false">
+		<node value="р" end_of_word="false">
+			<node value="а" end_of_word="false">
+				<node value="в" end_of_word="false">
+					<node value="и" end_of_word="true" />
+				</node>
+			</node>
+		</node>
+	</node>
+	<node value="с" end_of_word="false">
+		<node value="е" end_of_word="true" />
+		<node value="п" end_of_word="false">
+			<node value="р" end_of_word="false">
+				<node value="я" end_of_word="true" />
+			</node>
+		</node>
+	</node>
+	<node value="т" end_of_word="false">
+		<node value="о" end_of_word="false">
+			<node value="в" end_of_word="false">
+				<node value="а" end_of_word="true" />
+			</node>
+		</node>
+	</node>
+	<node value="ч" end_of_word="false">
+		<node value="о" end_of_word="false">
+			<node value="в" end_of_word="false">
+				<node value="е" end_of_word="false">
+					<node value="к" end_of_word="true">
+						<node value="ъ" end_of_word="false">
+							<node value="т" end_of_word="true" />
+						</node>
+					</node>
+				</node>
+			</node>
+		</node>
+	</node>
+</BTrie>

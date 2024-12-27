@@ -44,6 +44,9 @@
 		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
 		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
 	</term>
+	<term value="човек">
+		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
+	</term>
 	<term value="човекът">
 		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
 		<document path="resources\BG_texts\texts\Defence\text_test.txt" />

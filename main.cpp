@@ -13,19 +13,24 @@
 #include <set>
 #include <cctype>
 #include <algorithm>
+#include "BTrie.h"
 
+/////////////////////////////////////////////////////////
 std::string resourse_dir_path = "resources";
-
-std::map<std::string,
-         std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
 
 enum eComponents{
     INVERTED_INDEX,
     POSITIONAL_INDEX,
+    B_TRIE,
     AUTO_COUNT
 };
 std::unordered_map<eComponents, bool> components_to_export;
 
+std::map<std::string,
+         std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
+
+BTrie b_trie;
+/////////////////////////////////////////////////////////
 
 bool directory_exists(const std::string& dir_name) {
     struct stat info;
@@ -74,6 +79,15 @@ void load_config_file()
             } else {
                 std::cerr << "<positional_index> node not found." << std::endl;
             }
+
+            pugi::xml_node b_trie_node = components_node.child("b_trie");
+            if (b_trie_node) {
+                auto b_b_trie_export = b_trie_node.attribute("export").as_bool();
+                components_to_export[B_TRIE] = b_b_trie_export;
+            } else {
+                std::cerr << "<b_trie> node not found." << std::endl;
+            }
+
         } else {
             std::cerr << "<components> node not found." << std::endl;
         }
@@ -148,6 +162,10 @@ void add_to_index(const std::string& filepath)
 
         postings_map[filepath].push_back(position);
         position++;
+
+        if(components_to_export.at(B_TRIE) && isCyrillicWord(word)) {
+            b_trie.insert(word);
+        }
     }
 
     file.close();
@@ -191,7 +209,6 @@ void traverse_directory(const std::string& directory_path)
         } else {
             if (file_or_dir_name.substr(file_or_dir_name.size() - 4) == ".txt") {
             /// READ ONLY ONE/TWO FILES FOR DEVELOPMENT
-                //if(directory_path=="resources\\BG_texts\\texts\\Sport" && file_or_dir_name=="text_001.txt"){
                 if(file_or_dir_name=="text_test.txt" || file_or_dir_name=="text_test_2.txt") {
                     std::cout << "Reading file: " << directory_path + "\\" + file_or_dir_name << std::endl;
                     read_file(directory_path + "\\" + file_or_dir_name);
@@ -274,6 +291,10 @@ void write_positional_index_to_xml()
 
 int main()
 {
+    for(eComponents comp = eComponents::INVERTED_INDEX; comp < eComponents::AUTO_COUNT; comp = eComponents(comp + 1)) {
+        components_to_export[comp] = false;
+    }
+
     load_config_file();
     if (!directory_exists(resourse_dir_path)) {
         std::cerr << "Directory \'" << resourse_dir_path << "\' does not exist: " << std::endl;
@@ -283,8 +304,9 @@ int main()
     traverse_directory(resourse_dir_path);
     std::cout << std::endl;
 
-    if(components_to_export.count(INVERTED_INDEX)) write_inverted_index_to_xml();
-    if(components_to_export.count(POSITIONAL_INDEX)) write_positional_index_to_xml();
+    if(components_to_export.at(INVERTED_INDEX))      write_inverted_index_to_xml();
+    if(components_to_export.at(POSITIONAL_INDEX))    write_positional_index_to_xml();
+    if(components_to_export.at(B_TRIE))              b_trie.exportToXML("output\\b_trie.xml");
 
     return 0;
 }

@@ -6,5 +6,6 @@
     <components>
         <inverted_index export="true"/>
         <positional_index export="true"/>
+        <b_trie export="true"/>
     </components>
 </config>

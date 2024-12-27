@@ -33,6 +33,8 @@
 			<Add option="-fexceptions" />
 			<Add option="-fexec-charset=UTF-8" />
 		</Compiler>
+		<Unit filename="BTrie.cpp" />
+		<Unit filename="BTrie.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="pugiconfig.hpp" />
 		<Unit filename="pugixml.cpp" />
