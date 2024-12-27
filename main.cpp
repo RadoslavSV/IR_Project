@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include "pugixml.hpp"
 #include <unordered_map>
+#include <map>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -15,10 +16,11 @@
 
 std::string resourse_dir_path = "resources";
 
-std::unordered_map<std::string,
-                   std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
+std::map<std::string,
+         std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
 
 enum eComponents{
+    INVERTED_INDEX,
     POSITIONAL_INDEX,
     AUTO_COUNT
 };
@@ -57,6 +59,14 @@ void load_config_file()
 
         pugi::xml_node components_node = root.child("components");
         if (components_node) {
+            pugi::xml_node inverted_index_node = components_node.child("inverted_index");
+            if (inverted_index_node) {
+                auto b_inverted_index_export = inverted_index_node.attribute("export").as_bool();
+                components_to_export[INVERTED_INDEX] = b_inverted_index_export;
+            } else {
+                std::cerr << "<inverted_index> node not found." << std::endl;
+            }
+
             pugi::xml_node positional_index_node = components_node.child("positional_index");
             if (positional_index_node) {
                 auto b_positional_index_export = positional_index_node.attribute("export").as_bool();
@@ -190,6 +200,35 @@ void traverse_directory(const std::string& directory_path)
     FindClose(hFind);
 }
 
+void write_inverted_index_to_xml()
+{
+    pugi::xml_document doc;
+    pugi::xml_node root = doc.append_child("inverted_index");
+
+    for (const auto& [term, term_data] : positional_index) {
+        const auto& [doc_frequency, postings_map] = term_data;
+
+        pugi::xml_node term_node = root.append_child("term");
+        term_node.append_attribute("value") = term.c_str();
+
+        for (const auto& [filepath, positions] : postings_map) {
+            pugi::xml_node doc_node = term_node.append_child("document");
+            doc_node.append_attribute("path") = filepath.c_str();
+        }
+    }
+
+    if (mkdir("output") && errno != EEXIST) {
+        std::cerr << "Error creating output directory\n";
+    }
+
+    const std::string file_path = "output\\inverted_index.xml";
+    if (doc.save_file(file_path.c_str())) {
+        std::cout << "Inverted index successfully written to " << file_path << std::endl;
+    } else {
+        std::cerr << "Failed to write inverted index to " << file_path << std::endl;
+    }
+}
+
 void write_positional_index_to_xml()
 {
     pugi::xml_document doc;
@@ -240,7 +279,8 @@ int main()
     traverse_directory(resourse_dir_path);
     std::cout << std::endl;
 
-    if(components_to_export.at(POSITIONAL_INDEX)) write_positional_index_to_xml();
+    if(components_to_export.count(INVERTED_INDEX)) write_inverted_index_to_xml();
+    if(components_to_export.count(POSITIONAL_INDEX)) write_positional_index_to_xml();
 
     return 0;
 }

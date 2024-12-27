@@ -4,6 +4,7 @@
         <name>resources\BG_texts</name>
     </resource_directory>
     <components>
+        <inverted_index export="true"/>
         <positional_index export="true"/>
     </components>
 </config>

@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <positional_index>
-	<term value="или" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
-			<positions>{5}</positions>
+	<term value="беше" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{9}</positions>
 		</document>
 	</term>
-	<term value="затова" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
-			<positions>{4}</positions>
-		</document>
-	</term>
-	<term value="и" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
-			<positions>{0}</positions>
+	<term value="да" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{3}</positions>
 		</document>
 	</term>
 	<term value="добре" doc_frequency="2">
@@ -23,14 +18,9 @@
 			<positions>{10, 11, 12}</positions>
 		</document>
 	</term>
-	<term value="беше" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{9}</positions>
-		</document>
-	</term>
-	<term value="иванов" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{14, 15}</positions>
+	<term value="затова" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
+			<positions>{4}</positions>
 		</document>
 	</term>
 	<term value="защото" doc_frequency="1">
@@ -38,14 +28,44 @@
 			<positions>{6}</positions>
 		</document>
 	</term>
+	<term value="и" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
+			<positions>{0}</positions>
+		</document>
+	</term>
+	<term value="иван" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{13}</positions>
+		</document>
+	</term>
+	<term value="иванов" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{14, 15}</positions>
+		</document>
+	</term>
+	<term value="или" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
+			<positions>{5}</positions>
+		</document>
+	</term>
 	<term value="не" doc_frequency="1">
 		<document path="resources\BG_texts\texts\Defence\text_test.txt">
 			<positions>{8}</positions>
 		</document>
 	</term>
+	<term value="прави" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{4}</positions>
+		</document>
+	</term>
 	<term value="се" doc_frequency="1">
 		<document path="resources\BG_texts\texts\Defence\text_test.txt">
 			<positions>{1}</positions>
+		</document>
+	</term>
+	<term value="спря" doc_frequency="1">
+		<document path="resources\BG_texts\texts\Defence\text_test.txt">
+			<positions>{2}</positions>
 		</document>
 	</term>
 	<term value="това" doc_frequency="2">
@@ -56,32 +76,12 @@
 			<positions>{5, 7}</positions>
 		</document>
 	</term>
-	<term value="иван" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{13}</positions>
-		</document>
-	</term>
-	<term value="спря" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{2}</positions>
-		</document>
-	</term>
 	<term value="човекът" doc_frequency="2">
 		<document path="resources\BG_texts\texts\Defence\text_test_2.txt">
 			<positions>{1}</positions>
 		</document>
 		<document path="resources\BG_texts\texts\Defence\text_test.txt">
 			<positions>{0}</positions>
-		</document>
-	</term>
-	<term value="да" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{3}</positions>
-		</document>
-	</term>
-	<term value="прави" doc_frequency="1">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt">
-			<positions>{4}</positions>
 		</document>
 	</term>
 </positional_index>
