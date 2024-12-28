@@ -22,9 +22,11 @@ enum eComponents{
     INVERTED_INDEX,
     POSITIONAL_INDEX,
     B_TRIE,
+    USER_QUERY,
     AUTO_COUNT
 };
 std::unordered_map<eComponents, bool> components_to_export;
+bool user_query_prompt = false;
 
 std::map<std::string,
          std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
@@ -66,26 +68,31 @@ void load_config_file()
         if (components_node) {
             pugi::xml_node inverted_index_node = components_node.child("inverted_index");
             if (inverted_index_node) {
-                auto b_inverted_index_export = inverted_index_node.attribute("export").as_bool();
-                components_to_export[INVERTED_INDEX] = b_inverted_index_export;
+                components_to_export[INVERTED_INDEX] = inverted_index_node.attribute("export").as_bool();
             } else {
                 std::cerr << "<inverted_index> node not found." << std::endl;
             }
 
             pugi::xml_node positional_index_node = components_node.child("positional_index");
             if (positional_index_node) {
-                auto b_positional_index_export = positional_index_node.attribute("export").as_bool();
-                components_to_export[POSITIONAL_INDEX] = b_positional_index_export;
+                components_to_export[POSITIONAL_INDEX] = positional_index_node.attribute("export").as_bool();
             } else {
                 std::cerr << "<positional_index> node not found." << std::endl;
             }
 
             pugi::xml_node b_trie_node = components_node.child("b_trie");
             if (b_trie_node) {
-                auto b_b_trie_export = b_trie_node.attribute("export").as_bool();
-                components_to_export[B_TRIE] = b_b_trie_export;
+                components_to_export[B_TRIE] = b_trie_node.attribute("export").as_bool();
             } else {
                 std::cerr << "<b_trie> node not found." << std::endl;
+            }
+
+            pugi::xml_node user_query_node = components_node.child("user_query");
+            if (user_query_node) {
+                components_to_export[USER_QUERY] = user_query_node.attribute("export").as_bool();
+                user_query_prompt = user_query_node.attribute("prompt").as_bool();
+            } else {
+                std::cerr << "<user_query> node not found." << std::endl;
             }
 
         } else {
@@ -151,7 +158,6 @@ void add_to_index(const std::string& filepath)
         if(isCyrillicWord(word)) {
             cyrillicWordToLowercase(word);
         }
-
         if(word.size() == 0) continue;
 
         auto& [doc_frequency, postings_map] = positional_index[word];
@@ -286,6 +292,49 @@ void write_positional_index_to_xml()
     }
 }
 
+void user_query_results_to_xml(const std::string& query) {
+    pugi::xml_document doc;
+
+    pugi::xml_node user_query_node = doc.append_child("user_query");
+    user_query_node.append_attribute("query") = query.c_str();
+
+    std::string search_query = query;
+    cleanCyrillicWord(search_query);
+    if(isCyrillicWord(search_query)) {
+        cyrillicWordToLowercase(search_query);
+    }
+
+    auto term_it = positional_index.find(search_query);
+    if (term_it != positional_index.end()) {
+        const auto& [doc_frequency, postings_map] = term_it->second;
+
+        for (const auto& [filepath, positions] : postings_map) {
+            pugi::xml_node document_node = user_query_node.append_child("document");
+            document_node.append_attribute("path") = filepath.c_str();
+
+            pugi::xml_node positions_node = document_node.append_child("positions");
+            positions_node.append_attribute("term_frequency") = static_cast<int>(positions.size());
+
+            std::string all_positions = "{";
+            for (int pos : positions) {
+                all_positions += std::to_string(pos) + ", ";
+            }
+            all_positions.at(all_positions.size() - 2) = '}';
+            all_positions.pop_back();
+            positions_node.text() = all_positions.c_str();
+        }
+    } else {
+        std::cerr << "Query term \"" << query << "\" not found in the index." << std::endl;
+    }
+
+    const std::string& output_path = "output\\user_query.xml";
+    if (doc.save_file(output_path.c_str())) {
+        std::cout << "Query results successfully exported to " << output_path << std::endl;
+    } else {
+        std::cerr << "Failed to export query results to " << output_path << std::endl;
+    }
+}
+
 int main()
 {
     for(eComponents comp = eComponents::INVERTED_INDEX; comp < eComponents::AUTO_COUNT; comp = eComponents(comp + 1)) {
@@ -304,6 +353,12 @@ int main()
     if(components_to_export.at(INVERTED_INDEX))      write_inverted_index_to_xml();
     if(components_to_export.at(POSITIONAL_INDEX))    write_positional_index_to_xml();
     if(components_to_export.at(B_TRIE))              b_trie.exportToXML("output\\b_trie.xml");
+    std::string query = "";
+    if(user_query_prompt) {
+        std::cout << "Enter your query: ";
+        std::cin >> query;
+        if(components_to_export.at(USER_QUERY))      user_query_results_to_xml(query);
+    }
 
     return 0;
 }
