@@ -1,54 +1,54 @@
 <?xml version="1.0"?>
 <inverted_index>
 	<term value="беше">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="да">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="добре">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="затова">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
 	</term>
 	<term value="защото">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="и">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
 	</term>
 	<term value="иван">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="иванов">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="или">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
 	</term>
 	<term value="не">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="прави">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="се">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="спря">
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="това">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 	<term value="човек">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
 	</term>
 	<term value="човекът">
-		<document path="resources\BG_texts\texts\Defence\text_test_2.txt" />
-		<document path="resources\BG_texts\texts\Defence\text_test.txt" />
+		<document path="resources\BG_texts\test\text_test_2.txt" />
+		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
 </inverted_index>

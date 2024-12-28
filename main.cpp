@@ -208,11 +208,8 @@ void traverse_directory(const std::string& directory_path)
             traverse_directory(directory_path + "\\" + file_or_dir_name);
         } else {
             if (file_or_dir_name.substr(file_or_dir_name.size() - 4) == ".txt") {
-            /// READ ONLY ONE/TWO FILES FOR DEVELOPMENT
-                if(file_or_dir_name=="text_test.txt" || file_or_dir_name=="text_test_2.txt") {
-                    std::cout << "Reading file: " << directory_path + "\\" + file_or_dir_name << std::endl;
-                    read_file(directory_path + "\\" + file_or_dir_name);
-                }
+                std::cout << "Reading file: " << directory_path + "\\" + file_or_dir_name << std::endl;
+                read_file(directory_path + "\\" + file_or_dir_name);
             }
         }
     } while (FindNextFile(hFind, &findFileData) != 0);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <resource_directory>
-        <name>resources\BG_texts</name>
+        <name>resources\BG_texts\test</name>
     </resource_directory>
     <components>
         <inverted_index export="true"/>
