@@ -7,6 +7,6 @@
         <inverted_index export="true"/>
         <positional_index export="true"/>
         <b_trie export="true"/>
-        <user_query export="true" prompt="true"/>
+        <user_query export="true"/>
     </components>
 </config>

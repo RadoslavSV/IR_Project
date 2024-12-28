@@ -26,7 +26,6 @@ enum eComponents{
     AUTO_COUNT
 };
 std::unordered_map<eComponents, bool> components_to_export;
-bool user_query_prompt = false;
 
 std::map<std::string,
          std::pair<int, std::unordered_map<std::string, std::vector<int>>>> positional_index;
@@ -90,7 +89,6 @@ void load_config_file()
             pugi::xml_node user_query_node = components_node.child("user_query");
             if (user_query_node) {
                 components_to_export[USER_QUERY] = user_query_node.attribute("export").as_bool();
-                user_query_prompt = user_query_node.attribute("prompt").as_bool();
             } else {
                 std::cerr << "<user_query> node not found." << std::endl;
             }
@@ -308,9 +306,11 @@ void user_query_results_to_xml(const std::string& query) {
     if (term_it != positional_index.end()) {
         const auto& [doc_frequency, postings_map] = term_it->second;
 
+        std::cout << "Query term \"" << query << "\" found in files:" << std::endl;
         for (const auto& [filepath, positions] : postings_map) {
             pugi::xml_node document_node = user_query_node.append_child("document");
             document_node.append_attribute("path") = filepath.c_str();
+            std::cout << filepath << std::endl;
 
             pugi::xml_node positions_node = document_node.append_child("positions");
             positions_node.append_attribute("term_frequency") = static_cast<int>(positions.size());
@@ -354,10 +354,10 @@ int main()
     if(components_to_export.at(POSITIONAL_INDEX))    write_positional_index_to_xml();
     if(components_to_export.at(B_TRIE))              b_trie.exportToXML("output\\b_trie.xml");
     std::string query = "";
-    if(user_query_prompt) {
+    if(components_to_export.at(USER_QUERY)) {
         std::cout << "Enter your query: ";
         std::cin >> query;
-        if(components_to_export.at(USER_QUERY))      user_query_results_to_xml(query);
+        user_query_results_to_xml(query);
     }
 
     return 0;
