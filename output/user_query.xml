@@ -1,9 +1,2 @@
 <?xml version="1.0"?>
-<user_query query="дОБрЕ">
-	<document path="resources\BG_texts\test\text_test_2.txt">
-		<positions term_frequency="1">{2}</positions>
-	</document>
-	<document path="resources\BG_texts\test\text_test.txt">
-		<positions term_frequency="3">{10, 11, 12}</positions>
-	</document>
-</user_query>
+<user_query query="бре" />

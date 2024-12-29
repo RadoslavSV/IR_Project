@@ -8,5 +8,6 @@
         <positional_index export="true"/>
         <b_trie export="true"/>
         <user_query export="true"/>
+        <edit_distance export="true"/>
     </components>
 </config>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<edit_distance query="бре">
+	<term value="брей" levenshtein_distance="1">
+		<matrix>
+            0 1 2 3 4 
+            1 0 1 2 3 
+            2 1 0 1 2 
+            3 2 1 0 1 
+        </matrix>
+	</term>
+	<term value="беше" levenshtein_distance="2">
+		<matrix>
+            0 1 2 3 4 
+            1 0 1 2 3 
+            2 1 1 2 3 
+            3 2 1 2 2 
+        </matrix>
+	</term>
+	<term value="добре" levenshtein_distance="2">
+		<matrix>
+            0 1 2 3 4 5 
+            1 1 2 2 3 4 
+            2 2 2 3 2 3 
+            3 3 3 3 3 2 
+        </matrix>
+	</term>
+	<term value="не" levenshtein_distance="2">
+		<matrix>
+            0 1 2 
+            1 1 2 
+            2 2 2 
+            3 3 2 
+        </matrix>
+	</term>
+	<term value="се" levenshtein_distance="2">
+		<matrix>
+            0 1 2 
+            1 1 2 
+            2 2 2 
+            3 3 2 
+        </matrix>
+	</term>
+	<term value="да" levenshtein_distance="3">
+		<matrix>
+            0 1 2 
+            1 1 2 
+            2 2 2 
+            3 3 3 
+        </matrix>
+	</term>
+	<term value="и" levenshtein_distance="3">
+		<matrix>
+            0 1 
+            1 1 
+            2 2 
+            3 3 
+        </matrix>
+	</term>
+	<term value="или" levenshtein_distance="3">
+		<matrix>
+            0 1 2 3 
+            1 1 2 3 
+            2 2 2 3 
+            3 3 3 3 
+        </matrix>
+	</term>
+	<term value="спря" levenshtein_distance="3">
+		<matrix>
+            0 1 2 3 4 
+            1 1 2 3 4 
+            2 2 2 2 3 
+            3 3 3 3 3 
+        </matrix>
+	</term>
+</edit_distance>

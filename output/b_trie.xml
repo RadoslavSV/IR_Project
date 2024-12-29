@@ -6,6 +6,11 @@
 				<node value="е" end_of_word="true" />
 			</node>
 		</node>
+		<node value="р" end_of_word="false">
+			<node value="е" end_of_word="false">
+				<node value="й" end_of_word="true" />
+			</node>
+		</node>
 	</node>
 	<node value="д" end_of_word="false">
 		<node value="а" end_of_word="true" />

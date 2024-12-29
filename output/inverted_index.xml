@@ -3,6 +3,9 @@
 	<term value="беше">
 		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>
+	<term value="брей">
+		<document path="resources\BG_texts\test\text_test.txt" />
+	</term>
 	<term value="да">
 		<document path="resources\BG_texts\test\text_test.txt" />
 	</term>

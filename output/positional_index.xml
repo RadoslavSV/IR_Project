@@ -5,6 +5,11 @@
 			<positions term_frequency="1">{9}</positions>
 		</document>
 	</term>
+	<term value="брей" doc_frequency="1">
+		<document path="resources\BG_texts\test\text_test.txt">
+			<positions term_frequency="1">{16}</positions>
+		</document>
+	</term>
 	<term value="да" doc_frequency="1">
 		<document path="resources\BG_texts\test\text_test.txt">
 			<positions term_frequency="1">{3}</positions>

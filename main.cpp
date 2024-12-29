@@ -23,6 +23,7 @@ enum eComponents{
     POSITIONAL_INDEX,
     B_TRIE,
     USER_QUERY,
+    EDIT_DISTANCE,
     AUTO_COUNT
 };
 std::unordered_map<eComponents, bool> components_to_export;
@@ -91,6 +92,13 @@ void load_config_file()
                 components_to_export[USER_QUERY] = user_query_node.attribute("export").as_bool();
             } else {
                 std::cerr << "<user_query> node not found." << std::endl;
+            }
+
+            pugi::xml_node edit_distance_node = components_node.child("edit_distance");
+            if (edit_distance_node) {
+                components_to_export[EDIT_DISTANCE] = edit_distance_node.attribute("export").as_bool();
+            } else {
+                std::cerr << "<edit_distance> node not found." << std::endl;
             }
 
         } else {
@@ -335,6 +343,95 @@ void user_query_results_to_xml(const std::string& query) {
     }
 }
 
+struct TermDistance {
+    std::string term;
+    int distance;
+    std::vector<std::vector<int>> matrix;
+};
+
+std::u32string toUTF32(const std::string& utf8_str) {
+    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> converter;
+    return converter.from_bytes(utf8_str);
+}
+
+TermDistance compute_Levenshtein_distance(const std::string& query, const std::string& term) {
+    if (!isCyrillicWord(query) || !isCyrillicWord(term)) {
+        return {"",0,{}};
+    }
+    std::u32string utf32word1 = toUTF32(query);
+    std::u32string utf32word2 = toUTF32(term);
+
+    int m = utf32word1.size();
+    int n = utf32word2.size();
+    std::vector<std::vector<int>> matrix(m + 1, std::vector<int>(n + 1));
+
+    for (int i = 0; i <= m; i++)
+        matrix[i][0] = i;
+    for (int j = 0; j <= n; j++)
+        matrix[0][j] = j;
+
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            int cost = (utf32word1[i - 1] == utf32word2[j - 1]) ? 0 : 1;
+            matrix[i][j] = std::min({matrix[i - 1][j] + 1,
+                                     matrix[i][j - 1] + 1,
+                                     matrix[i - 1][j - 1] + cost
+                                    });
+        }
+    }
+
+    TermDistance result;
+    result.term = term;
+    result.distance = matrix[m][n];
+    result.matrix = matrix;
+    return result;
+}
+
+void edit_distance_to_xml(const std::string& query) {
+    std::vector<TermDistance> results;
+
+    for (const auto& [term, term_data] : positional_index) {
+        TermDistance result = compute_Levenshtein_distance(query, term);
+        if (result.distance >= 1 && result.distance <= 3) {
+            results.push_back(result);
+        }
+    }
+
+    std::sort(results.begin(), results.end(), [](const TermDistance& a, const TermDistance& b) {
+        return a.distance < b.distance;
+    });
+
+    pugi::xml_document doc;
+    pugi::xml_node root = doc.append_child("edit_distance");
+    root.append_attribute("query") = query.c_str();
+
+    for (const auto& result : results) {
+        pugi::xml_node term_node = root.append_child("term");
+        term_node.append_attribute("value") = result.term.c_str();
+        term_node.append_attribute("levenshtein_distance") = result.distance;
+
+        pugi::xml_node matrix_node = term_node.append_child("matrix");
+        std::ostringstream matrix_stream;
+        matrix_stream << "\n";
+        for (const auto& row : result.matrix) {
+            matrix_stream << "            ";
+            for (int val : row) {
+                matrix_stream << val << " ";
+            }
+            matrix_stream << "\n";
+        }
+        matrix_stream << "        ";
+        matrix_node.text() = matrix_stream.str().c_str();
+    }
+
+    const std::string file_path = "output\\edit_distance.xml";
+    if (doc.save_file(file_path.c_str())) {
+        std::cout << "Edit distance successfully exported to " << file_path << std::endl;
+    } else {
+        std::cerr << "Failed to export edit distance!" << std::endl;
+    }
+}
+
 int main()
 {
     for(eComponents comp = eComponents::INVERTED_INDEX; comp < eComponents::AUTO_COUNT; comp = eComponents(comp + 1)) {
@@ -359,6 +456,7 @@ int main()
         std::cin >> query;
         user_query_results_to_xml(query);
     }
+    if(components_to_export.at(EDIT_DISTANCE))       edit_distance_to_xml(query);
 
     return 0;
 }
