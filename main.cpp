@@ -334,6 +334,7 @@ void user_query_results_to_xml(const std::string& query) {
     } else {
         std::cerr << "Query term \"" << query << "\" not found in the index." << std::endl;
     }
+    std::cout << std::endl;
 
     const std::string& output_path = "output\\user_query.xml";
     if (doc.save_file(output_path.c_str())) {
@@ -430,6 +431,20 @@ void edit_distance_to_xml(const std::string& query) {
     } else {
         std::cerr << "Failed to export edit distance!" << std::endl;
     }
+
+    auto term_it = positional_index.find(query);
+    if (term_it == positional_index.end()) {
+        bool bWritten = false;
+        for (const auto& result : results) {
+            if(result.distance == 1) {
+                if(!bWritten) {
+                    std::cout << "\nMaybe you meant: \n";
+                    bWritten = true;
+                }
+                std::cout << result.term << std::endl;
+            }
+        }
+    }
 }
 
 int main()
@@ -452,7 +467,7 @@ int main()
     if(components_to_export.at(B_TRIE))              b_trie.exportToXML("output\\b_trie.xml");
     std::string query = "";
     if(components_to_export.at(USER_QUERY)) {
-        std::cout << "Enter your query: ";
+        std::cout << "\nEnter your query: ";
         std::cin >> query;
         user_query_results_to_xml(query);
     }
