@@ -5,6 +5,7 @@
 #include <string>
 #include <locale>
 #include <codecvt>
+#include <vector>
 #include "pugixml.hpp"
 
 class BTrieNode {
@@ -26,6 +27,8 @@ public:
     BTrie();
 
     void insert(const std::string& word);
+
+    std::vector<std::string> getWordsWithPrefix(const std::string& prefix);
 
     void exportToXML(const std::string& filepath);
 };

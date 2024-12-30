@@ -34,6 +34,39 @@ void BTrie::insert(const std::string& word) {
     current->is_end_of_word = true;
 }
 
+void collectWords(BTrieNode* node, std::u16string current_word, std::vector<std::u16string>& words) {
+    if (node->is_end_of_word) {
+        words.push_back(current_word);
+    }
+
+    for (auto& child : node->children) {
+        collectWords(child.second, current_word + child.first, words);
+    }
+}
+
+std::vector<std::string> BTrie::getWordsWithPrefix(const std::string& prefix) {
+    std::wstring_convert<std::codecvt_utf8<char16_t>, char16_t> converter;
+    std::u16string utf16prefix = converter.from_bytes(prefix);
+
+    BTrieNode* current = root;
+    for (char16_t ch : utf16prefix) {
+        if (current->children.find(ch) == current->children.end()) {
+            return {};
+        }
+        current = current->children[ch];
+    }
+
+    std::vector<std::u16string> words_utf16;
+    collectWords(current, utf16prefix, words_utf16);
+
+    std::vector<std::string> words_utf8;
+    for (const auto& utf16_word : words_utf16) {
+        words_utf8.push_back(converter.to_bytes(utf16_word));
+    }
+
+    return words_utf8;
+}
+
 void BTrie::exportToXML(const std::string& filepath) {
     pugi::xml_document doc;
     pugi::xml_node root_xml_node = doc.append_child("BTrie");

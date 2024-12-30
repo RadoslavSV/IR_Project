@@ -1,2 +1,13 @@
 <?xml version="1.0"?>
-<user_query query="бре" />
+<wildcard_user_query query="за*">
+	<term value="затова">
+		<document path="resources\BG_texts\test\text_test_2.txt">
+			<positions term_frequency="1">{4}</positions>
+		</document>
+	</term>
+	<term value="защото">
+		<document path="resources\BG_texts\test\text_test.txt">
+			<positions term_frequency="1">{6}</positions>
+		</document>
+	</term>
+</wildcard_user_query>

@@ -26,7 +26,7 @@
 
 1694105712 c:\users\owner\desktop\ir_project\pugiconfig.hpp
 
-1735547430 source:c:\users\owner\desktop\ir_project\main.cpp
+1735550926 source:c:\users\owner\desktop\ir_project\main.cpp
 	<iostream>
 	<sys/stat.h>
 	"pugixml.hpp"
@@ -44,14 +44,15 @@
 	<algorithm>
 	"BTrie.h"
 
-1735294588 source:c:\users\owner\desktop\ir_project\btrie.cpp
+1735548840 source:c:\users\owner\desktop\ir_project\btrie.cpp
 	"BTrie.h"
 
-1735293156 c:\users\owner\desktop\ir_project\btrie.h
+1735548857 c:\users\owner\desktop\ir_project\btrie.h
 	<iostream>
 	<map>
 	<string>
 	<locale>
 	<codecvt>
+	<vector>
 	"pugixml.hpp"
 

@@ -344,6 +344,58 @@ void user_query_results_to_xml(const std::string& query) {
     }
 }
 
+void wildcard_user_query_results_to_xml(const std::string& query) {
+    if (query.empty() || query.back() != '*') {
+        std::cerr << "Invalid wildcard query. The query must end with '*'.\n";
+        return;
+    }
+
+    std::string prefix = query.substr(0, query.size() - 1);
+    cleanCyrillicWord(prefix);
+    if (isCyrillicWord(prefix)) {
+        cyrillicWordToLowercase(prefix);
+    }
+
+    std::vector<std::string> matching_words = b_trie.getWordsWithPrefix(prefix);
+
+    pugi::xml_document doc;
+    pugi::xml_node root = doc.append_child("wildcard_user_query");
+    root.append_attribute("query") = query.c_str();
+
+    for (const auto& word : matching_words) {
+        auto term_it = positional_index.find(word);
+        if (term_it != positional_index.end()) {
+            const auto& [doc_frequency, postings_map] = term_it->second;
+
+            pugi::xml_node term_node = root.append_child("term");
+            term_node.append_attribute("value") = word.c_str();
+
+            for (const auto& [filepath, positions] : postings_map) {
+                pugi::xml_node document_node = term_node.append_child("document");
+                document_node.append_attribute("path") = filepath.c_str();
+
+                std::string all_positions = "{";
+                for (int pos : positions) {
+                    all_positions += std::to_string(pos) + ", ";
+                }
+                all_positions.at(all_positions.size() - 2) = '}';
+                all_positions.pop_back();
+
+                pugi::xml_node positions_node = document_node.append_child("positions");
+                positions_node.append_attribute("term_frequency") = static_cast<int>(positions.size());
+                positions_node.text() = all_positions.c_str();
+            }
+        }
+    }
+
+    const std::string output_path = "output\\user_query.xml";
+    if (doc.save_file(output_path.c_str())) {
+        std::cout << "Wildcard query results successfully exported to " << output_path << "\n";
+    } else {
+        std::cerr << "Failed to export query results to "<< output_path << "\n";
+    }
+}
+
 struct TermDistance {
     std::string term;
     int distance;
@@ -474,7 +526,9 @@ int main()
     if(components_to_export.at(USER_QUERY)) {
         std::cout << "\nEnter your query: ";
         std::cin >> query;
-        user_query_results_to_xml(query);
+
+        if(query.find('*') == std::string::npos) user_query_results_to_xml(query);
+        else wildcard_user_query_results_to_xml(query);
     }
     if(components_to_export.at(EDIT_DISTANCE))       edit_distance_to_xml(query);
 
