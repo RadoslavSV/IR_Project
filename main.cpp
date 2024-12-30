@@ -432,7 +432,12 @@ void edit_distance_to_xml(const std::string& query) {
         std::cerr << "Failed to export edit distance!" << std::endl;
     }
 
-    auto term_it = positional_index.find(query);
+    std::string search_query = query;
+    cleanCyrillicWord(search_query);
+    if(isCyrillicWord(search_query)) {
+        cyrillicWordToLowercase(search_query);
+    }
+    auto term_it = positional_index.find(search_query);
     if (term_it == positional_index.end()) {
         bool bWritten = false;
         for (const auto& result : results) {
